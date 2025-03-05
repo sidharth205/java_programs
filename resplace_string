@@ -1,0 +1,27 @@
+//Write a Java Program to Count Replace First Occurrence of a String. 
+Code:
+___________________________________________________________________
+import java.util.Scanner;
+
+public class ReplaceFirstOccurrence {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        
+        System.out.print("Enter the original string: ");
+        String originalString = scanner.nextLine();
+        
+        System.out.print("Enter the substring to replace: ");
+        String toReplace = scanner.nextLine();
+        
+        System.out.print("Enter the replacement string: ");
+        String replacement = scanner.nextLine();
+        
+        
+        String modifiedString = originalString.replaceFirst(toReplace, replacement);
+        
+        System.out.println("Modified String: " + modifiedString);
+        
+        c
+    }
+}
