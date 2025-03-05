@@ -1,0 +1,111 @@
+//An educational institution maintains a database of its employees. The database is divided into a number of classes whose hierarchical relationships are shown below.
+//Write all the classes and define the methods to create the database and retrieve individual information as and when needed.
+//Write a driver program to test the classes. Staff (code, name) Teacher (subject, publication) is a Staff Officer (grade) is a Staff Typist (speed) is a Staff RegularTypist (remuneration) is a Typist CasualTypist (daily wages) is a Typist.
+Code:
+_____________________________________________________________________________
+class Staff {
+    int code;
+    String name;
+
+    Staff(int code, String name) {
+        this.code = code;
+        this.name = name;
+    }
+
+    void display() {
+        System.out.println("Code: " + code + ", Name: " + name);
+    }
+}
+
+
+class Teacher extends Staff {
+    String subject;
+    String publication;
+
+    Teacher(int code, String name, String subject, String publication) {
+        super(code, name);
+        this.subject = subject;
+        this.publication = publication;
+    }
+
+    void display() {
+        super.display();
+        System.out.println("Subject: " + subject + ", Publication: " + publication);
+    }
+}
+
+class Officer extends Staff {
+    String grade;
+
+    Officer(int code, String name, String grade) {
+        super(code, name);
+        this.grade = grade;
+    }
+
+    void display() {
+        super.display();
+        System.out.println("Grade: " + grade);
+    }
+}
+
+class Typist extends Staff {
+    int speed;
+
+    Typist(int code, String name, int speed) {
+        super(code, name);
+        this.speed = speed;
+    }
+
+    void display() {
+        super.display();
+        System.out.println("Typing Speed: " + speed + " WPM");
+    }
+}
+
+
+class RegularTypist extends Typist {
+    double remuneration;
+
+    RegularTypist(int code, String name, int speed, double remuneration) {
+        super(code, name, speed);
+        this.remuneration = remuneration;
+    }
+
+    void display() {
+        super.display();
+        System.out.println("Remuneration: " + remuneration);
+    }
+}
+
+
+class CasualTypist extends Typist {
+    double dailyWages;
+
+    CasualTypist(int code, String name, int speed, double dailyWages) {
+        super(code, name, speed);
+        this.dailyWages = dailyWages;
+    }
+
+    void display() {
+        super.display();
+        System.out.println("Daily Wages: " + dailyWages);
+    }
+}
+
+public class EducationalInstitution {
+    public static void main(String[] args) {
+        Teacher t = new Teacher(101, "Alice", "Mathematics", "Oxford Press");
+        Officer o = new Officer(102, "Bob", "A");
+        RegularTypist rt = new RegularTypist(103, "Charlie", 80, 25000);
+        CasualTypist ct = new CasualTypist(104, "David", 75, 500);
+
+        System.out.println("--- Teacher Info ---");
+        t.display();
+        System.out.println("\n--- Officer Info ---");
+        o.display();
+        System.out.println("\n--- Regular Typist Info ---");
+        rt.display();
+        System.out.println("\n--- Casual Typist Info ---");
+        ct.display();
+    }
+}
