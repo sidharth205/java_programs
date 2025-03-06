@@ -1,0 +1,110 @@
+import java.util.Scanner;
+class Main{
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        dept dep = new dept();
+        dep.getdept("BTCSE");
+        int arr[] = new int[8];
+        for (int i = 0; i < 8; i++) {
+            arr[i] = 0;
+        }
+        for(int i=0;i<8;i++){
+        System.out.println("------------------------------------------------");
+        System.out.println("Please provide the necessary information for paying the semester fees");
+        System.out.print("Enter your name: ");
+        String s = sc.next();
+       
+        System.out.print("Enter your university roll number: ");
+        String r = sc.next();
+       
+        System.out.print("Enter the Semester you want to pay the fee for: ");
+        int n = sc.nextInt();
+       
+        student stu = new student(s, r, n, "ADAMAS", "BARASAT", 983641721);
+        stu.req_bonafide(s, r, n, arr);
+        }
+       
+        sc.close();
+    }
+}
+class university {
+    String name, address;
+    int bank_acc, sem_fee = 90000;
+   
+    university(String name, String address, int bank_acc) {
+        this.name = name;
+        this.address = address;
+        this.bank_acc = bank_acc;
+    }
+   
+    boolean verify(String stu_name, String roll, int sem, int arr[]) {
+        if (roll.contains("BTCSE") && arr[sem - 1] == 0) {
+            System.out.println("Paying fees for previous semester");
+            return true;
+        } else if (roll.contains("BTCSE") && arr[sem] == 1) {
+            System.out.println("Paying fees for current semester");
+            return true;
+        } else {
+            return false;
+        }
+    }
+   
+    void payment_success(int stuBank_acc) {
+        System.out.println("------Message to University------");
+        System.out.println("Payment Successful to university from AC:" + stuBank_acc);
+    }
+}
+
+class dept {
+    String dept_name;
+   
+    void getdept(String dept_name) {
+        this.dept_name = dept_name;
+    }
+}
+
+interface bank {
+    boolean pay_to_uni(int sem_fee);
+}
+
+class student extends university implements bank {
+    String stu_name, roll;
+    int sem;int balance = 400000;
+   
+    student(String stu_name, String roll, int sem, String name, String address, int bank_acc) {
+        super(name, address, bank_acc);
+        this.stu_name = stu_name;
+        this.roll = roll;
+        this.sem = sem;
+    }
+   
+    void req_bonafide(String stu_name, String roll, int sem, int arr[]) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Requesting bonafide certificate from University...");
+       
+        if (super.verify(stu_name, roll, sem, arr)) {
+            System.out.println("Verification done! Please enter your bank account number:");
+            int stuBank_acc = sc.nextInt();
+            System.out.println("Thank you! Requesting payment to bank...");
+           
+            if (pay_to_uni(sem_fee)) {
+                arr[sem - 1] = 1;
+                System.out.println(sem_fee + " paid to AC:" + bank_acc);
+                super.payment_success(stuBank_acc);
+            } else {
+                System.out.println("Not sufficient balance!");
+            }
+        } else {
+            System.out.println("Verification failed!");
+        }
+    }
+   
+    public boolean pay_to_uni(int sem_fee) {
+        if (sem_fee > balance) {
+            return false;
+        } else {
+            balance -= sem_fee;
+            return true;
+        }
+    }
+}
